@@ -1,20 +1,38 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+int button = 13;
+int led = 14;
+int buttVa = 0;
+
+int preVa = 0;
+int currVa = 0;
+
+int ledState = 0;
 
 void setup() {
   // put your setup code here, to run once:
-  pinMode(13, INPUT);
+  pinMode(button, INPUT);
+  pinMode(led, OUTPUT);
   Serial.begin(115200);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println(digitalRead(13));
+  currVa = digitalRead(button);
+  Serial.println(currVa);
+  
+  if (preVa == 0 && currVa == 1) {
+    if (ledState == 0) {
+      digitalWrite(led, HIGH);
+      ledState = 1;
+    }
+    else {
+      digitalWrite(led, LOW);
+      ledState = 0;
+    }
+  }
+
+  preVa = currVa;
+
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
